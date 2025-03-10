@@ -1,2 +1,5 @@
-# ignore .env file
+# ignore files
 .env
+
+# ignore folders
+PySide6/env
