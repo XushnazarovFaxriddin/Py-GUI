@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import *
+from PySide6.QtGui import *
 import sys
 
 class CalculatorApp(QWidget):
@@ -6,6 +7,7 @@ class CalculatorApp(QWidget):
         super().__init__()
         self.setWindowTitle("Calculator App")
         self.setGeometry(100, 100, 300, 400)
+        self.setWindowIcon(QIcon("src/buxdu-logo.png"))
         self.create_layout()
     def create_layout(self):
         self.layout = QVBoxLayout()
@@ -35,12 +37,26 @@ class CalculatorApp(QWidget):
                 button.clicked.connect(self.button_click)
                 h_layout.addWidget(button)
             self.layout.addLayout(h_layout)
+    def validate(self, text):
+        try:
+            eval(text)
+            return True
+        except:
+            return False
     def button_click(self):
         button = self.sender()
         label = button.text()
         if label == "C":
             self.display.clear()
         elif label == "=":
+            if not self.validate(self.display.text()):
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setText("Invalid input")
+                msg.setWindowTitle("Error")
+                msg.exec()
+                self.display.setText("0")
+                return
             result = str(eval(self.display.text()))
             self.display.setText(result)
         else:
