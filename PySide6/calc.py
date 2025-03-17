@@ -33,6 +33,9 @@ class CalculatorApp(QWidget):
             h_layout = QHBoxLayout()
             for label in row:
                 button = QPushButton(label)
+                font = button.font()
+                font.setPointSize(20)
+                button.setFont(font)
                 button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
                 button.clicked.connect(self.button_click)
                 h_layout.addWidget(button)
